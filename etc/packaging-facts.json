@@ -27,6 +27,8 @@
     "home_page": "",
     "keywords": "code-generation,developer-tools,validation,verification",
     "license": "",
+    "license_expression": null,
+    "license_files": null,
     "maintainer": "",
     "maintainer_email": "Stefan Hagen <stefan@hagen.link>",
     "name": "csaf",
