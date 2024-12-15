@@ -7,7 +7,7 @@ from collections.abc import Sequence
 from enum import Enum
 from typing import Annotated, List, Optional, no_type_check
 
-from pydantic import BaseModel, Field, RootModel, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, Field, RootModel, field_validator, model_validator
 
 from csaf.definitions import AnyUrl, Products, ReferenceTokenForProductGroupInstance, ReferenceTokenForProductInstance
 
@@ -111,6 +111,21 @@ class SerialNumber(
     pass
 
 
+class ModelNumber(
+    RootModel[
+        Annotated[
+            str,
+            Field(
+                description='Contains a full or abbreviated (partial) model number of the component to identify.',
+                min_length=1,
+                title='Model number',
+            ),
+        ]
+    ]
+):
+    pass
+
+
 class StockKeepingUnit(
     RootModel[
         Annotated[
@@ -134,6 +149,7 @@ class HelperToIdentifyTheProduct(BaseModel):
     Provides at least one method which aids in identifying the product in an asset database.
     """
 
+    model_config = ConfigDict(protected_namespaces=())
     cpe: Annotated[
         Optional[str],
         Field(
@@ -186,6 +202,15 @@ class HelperToIdentifyTheProduct(BaseModel):
             description='Contains a list of parts, or full serial numbers.',
             # min_items=1,
             title='List of serial numbers',
+        ),
+    ] = None
+    model_numbers: Annotated[
+        Optional[Sequence[ModelNumber]],
+        Field(
+            alias='model_numbers',
+            description='Contains a list of full or abbreviated (partial) model numbers.',
+            # min_items=1,
+            title='List of model numbers',
         ),
     ] = None
     skus: Annotated[
