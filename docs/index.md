@@ -49,3 +49,4 @@ In alphabetical order:
 
 * Anthony Harrison
 * Jacco Ligthart
+* Jiří Pešík
