@@ -20,6 +20,14 @@ class Revision(BaseModel):
         datetime,
         Field(description='The date of the revision entry', title='Date of the revision'),
     ]
+    legacy_version: Annotated[
+        Optional[str],
+        Field(
+            description='Contains the version string used in an existing document with the same content.',
+            min_length=1,
+            title='Legacy version of the revision1',
+        ),
+    ] = None
     number: Version
     summary: Annotated[
         str,
@@ -72,6 +80,7 @@ class Tracking(BaseModel):
                 'cisco-sa-20190513-secureboot',
             ],
             min_length=1,
+            pattern='^[\\S](.*[\\S])?$',
             title='Unique identifier for the document',
         ),
     ]
@@ -389,12 +398,13 @@ class Document(BaseModel):
             description='Defines a short canonical name, chosen by the document producer, which will inform the end'
             ' user as to the category of document.',
             examples=[
+                'csaf_base',
+                'csaf_security_advisory',
+                'csaf_vex',
                 'Example Company Security Notice',
-                'generic_csaf',
-                'security_advisory',
-                'vex',
             ],
             min_length=1,
+            pattern='^[^\\s\\-_\\.](.*[^\\s\\-_\\.])?$',
             title='Document category',
         ),
     ]

@@ -40,10 +40,10 @@ class Name(
         Annotated[
             str,
             Field(
-                description='Contains the name of a single person.',
+                description='Contains the name of a single contributor being recognized.',
                 examples=['Albert Einstein', 'Johann Sebastian Bach'],
                 min_length=1,
-                title='Name of entity being recognized',
+                title='Name of the contributor',
             ),
         ]
     ]
@@ -59,7 +59,7 @@ class Acknowledgment(BaseModel):
     names: Annotated[
         Optional[List[Name]],
         Field(
-            description='Contains the names of entities being recognized.',
+            description='Contains the names of contributors being recognized.',
             min_length=1,
             title='List of acknowledged names',
         ),
@@ -303,7 +303,7 @@ class Note(BaseModel):
     audience: Annotated[
         Optional[str],
         Field(
-            description='Indicate who is intended to read it.',
+            description='Indicates who is intended to read it.',
             examples=[
                 'all',
                 'executives',
@@ -316,14 +316,14 @@ class Note(BaseModel):
     ] = None
     category: Annotated[
         NoteCategory,
-        Field(description='Choice of what kind of note this is.', title='Note category'),
+        Field(description='Contains the information of what kind of note this is.', title='Note category'),
     ]
     text: Annotated[
         str,
         Field(
-            description='The contents of the note. Content varies depending on type.',
+            description='Holds the content of the note. Content varies depending on type.',
             min_length=1,
-            title='Note contents',
+            title='Note content',
         ),
     ]
     title: Annotated[

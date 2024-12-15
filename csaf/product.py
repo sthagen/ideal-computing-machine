@@ -96,21 +96,6 @@ class GenericUri(BaseModel):
     uri: Annotated[AnyUrl, Field(description='Contains the identifier itself.', title='URI')]
 
 
-class SerialNumber(
-    RootModel[
-        Annotated[
-            str,
-            Field(
-                description='Contains a part, or a full serial number of the component to identify.',
-                min_length=1,
-                title='Serial number',
-            ),
-        ]
-    ]
-):
-    pass
-
-
 class ModelNumber(
     RootModel[
         Annotated[
@@ -126,14 +111,29 @@ class ModelNumber(
     pass
 
 
+class SerialNumber(
+    RootModel[
+        Annotated[
+            str,
+            Field(
+                description='Contains a full or abbreviated (partial) serial number of the component to identify.',
+                min_length=1,
+                title='Serial number',
+            ),
+        ]
+    ]
+):
+    pass
+
+
 class StockKeepingUnit(
     RootModel[
         Annotated[
             str,
             Field(
                 description=(
-                    'Contains a part, or a full stock keeping unit (SKU) which is used in the ordering process'
-                    ' to identify the component.'
+                    'Contains a full or abbreviated (partial) stock keeping unit (SKU) which is used in'
+                    ' the ordering process to identify the component.'
                 ),
                 min_length=1,
                 title='Stock keeping unit',
@@ -199,8 +199,9 @@ class HelperToIdentifyTheProduct(BaseModel):
     serial_numbers: Annotated[
         Optional[Sequence[SerialNumber]],
         Field(
-            description='Contains a list of parts, or full serial numbers.',
+            description='Contains a list of full or abbreviated (partial) serial numbers.',
             # min_items=1,
+            # unique_items=True,
             title='List of serial numbers',
         ),
     ] = None
@@ -490,6 +491,7 @@ class BranchCategory(Enum):
     product_family = 'product_family'
     product_name = 'product_name'
     product_version = 'product_version'
+    product_version_range = 'product_version_range'
     service_pack = 'service_pack'
     specification = 'specification'
     vendor = 'vendor'
