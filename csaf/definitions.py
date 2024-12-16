@@ -10,10 +10,7 @@ from pydantic import AnyUrl, BaseModel, Field, RootModel, field_validator, model
 
 
 class Id(BaseModel):
-    """
-    Gives the document producer a place to publish a unique label or tracking ID for the vulnerability
-    (if such information exists).
-    """
+    """Contains a single unique label or tracking ID for the vulnerability."""
 
     system_name: Annotated[
         str,
@@ -33,6 +30,32 @@ class Id(BaseModel):
             title='Text',
         ),
     ]
+
+
+class Ids(
+    RootModel[
+        Annotated[
+            List[Id],
+            Field(
+                description=(
+                    'Represents a list of unique labels or tracking IDs for the vulnerability'
+                    ' (if such information exists).'
+                ),
+                min_length=1,
+                title='List of IDs',
+            ),
+        ]
+    ]
+):
+    """Represents a list of unique labels or tracking IDs for the vulnerability (if such information exists)."""
+
+    @classmethod
+    @no_type_check
+    @model_validator(mode='before')
+    def check_len(cls, v):
+        if not v:
+            raise ValueError('optional element present but empty')
+        return v
 
 
 class Name(

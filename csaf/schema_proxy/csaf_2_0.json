@@ -1106,7 +1106,8 @@
                 }
               }
             }
-          },          "involvements": {
+          },
+          "involvements": {
             "title": "List of involvements",
             "description": "Contains a list of involvements.",
             "type": "array",
