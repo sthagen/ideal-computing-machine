@@ -3,10 +3,82 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
+from datetime import datetime
 from enum import Enum
 from typing import Annotated, List, Optional, no_type_check
 
 from pydantic import AnyUrl, BaseModel, Field, RootModel, field_validator, model_validator
+
+
+class FlagCategory(Enum):
+    """
+    Defines the category of the machine readable label for flags.
+    """
+
+    component_not_present = 'component_not_present'
+    inline_mitigations_already_exist = 'inline_mitigations_already_exist'
+    vulnerable_code_cannot_be_controlled_by_adversary = 'vulnerable_code_cannot_be_controlled_by_adversary'
+    vulnerable_code_not_in_execute_path = 'vulnerable_code_not_in_execute_path'
+    vulnerable_code_not_present = 'vulnerable_code_not_present'
+
+
+class Flag(BaseModel):
+    """Contains product specific information in regard to this vulnerability as a single machine readable flag."""
+
+    date: Annotated[
+        Optional[datetime],
+        Field(
+            description='Contains the date when assessment was done or the flag was assigned.',
+            title='Date of the flag',
+        ),
+    ] = None
+
+    group_ids: Annotated[
+        Optional[ProductGroupIds],
+        Field(
+            description='Specifies a list of product_group_ids to give context to the parent item.',
+            title='List of product_group_ids',
+        ),
+    ] = None
+
+    label: Annotated[
+        FlagCategory,
+        Field(
+            description='Specifies the machine readable label.',
+            title='Label of the flag',
+        ),
+    ]
+    product_ids: Annotated[
+        Optional[ListOfProductIds],
+        Field(
+            description='Specifies a list of product_ids to give context to the parent item.',
+            title='List of product_ids',
+        ),
+    ] = None
+
+
+class Flags(
+    RootModel[
+        Annotated[
+            List[Flag],
+            Field(
+                description='Contains a list of machine readable flags.',
+                min_length=1,
+                # unique_items=True,
+                title='List of flags',
+            ),
+        ]
+    ]
+):
+    """Represents a list of unique labels or tracking IDs for the vulnerability (if such information exists)."""
+
+    @classmethod
+    @no_type_check
+    @model_validator(mode='before')
+    def check_len(cls, v):
+        if not v:
+            raise ValueError('optional element present but empty')
+        return v
 
 
 class Id(BaseModel):
