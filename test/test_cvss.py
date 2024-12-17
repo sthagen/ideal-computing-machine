@@ -173,7 +173,7 @@ def test_cvss31_minimal():
         'title': 'CVSS31',
         'type': 'object',
         'properties': {
-            'version': {'description': 'CVSS Version', 'default': '3.1', 'allOf': [{'$ref': '#/$defs/Version'}]},
+            'version': {'$ref': '#/$defs/Version', 'default': '3.1'},
             'vectorString': {
                 'title': 'Vectorstring',
                 'pattern': (
