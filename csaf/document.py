@@ -25,7 +25,7 @@ class Revision(BaseModel):
         Field(
             description='Contains the version string used in an existing document with the same content.',
             min_length=1,
-            title='Legacy version of the revision1',
+            title='Legacy version of the revision',
         ),
     ] = None
     number: Version
