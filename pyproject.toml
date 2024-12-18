@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "csaf"
-version = "2023.11.27"
+version = "2024.12.18"
 description = "Common Security Advisory Framework (CSAF) Verification, Validation, and Application Programming Interface (API)."
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -17,6 +17,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.9",
     "Topic :: Software Development :: Build Tools",
     "Topic :: Software Development :: Libraries",
@@ -29,15 +30,15 @@ keywords = [
 ]
 dependencies = [
     "jmespath >= 1.0.1",
-    "jsonschema >= 4.20.0",
-    "langcodes >= 3.3.0",
-    "lazr.uri >= 1.0.1",
-    "msgspec >= 0.18.4",
-    "pydantic >= 2.5.1",
-    "referencing >= 0.31.0",
-    "scooby >= 0.9.2",
-    "setuptools >= 68.2.2",
-    "typer >= 0.9.0",
+    "jsonschema >= 4.23.0",
+    "langcodes >= 3.5.0",
+    "lazr.uri >= 1.0.7",
+    "msgspec >= 0.18.6",
+    "pydantic >= 2.10.3",
+    "referencing >= 0.35.1",
+    "scooby >= 0.10.0",
+    "setuptools >= 75.6.0",
+    "typer >= 0.15.1",
 ]
 requires-python = ">=3.9"
 
